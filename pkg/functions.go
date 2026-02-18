@@ -1,8 +1,10 @@
 package pkg
 
 import (
+	"bytes"
 	"fmt"
 	"strings"
+	"sync"
 )
 
 type Auto struct {
@@ -36,4 +38,24 @@ func concatBuilder(l, r string) string {
 	b.WriteString(r)
 
 	return b.String()
+}
+
+var syncPool = &sync.Pool{
+	New: func() interface{} {
+		return bytes.NewBuffer(make([]byte, 0, 64))
+	},
+}
+
+func concatPool(l, r string) []byte {
+	b := syncPool.Get().(*bytes.Buffer)
+	b.Reset()
+	b.Grow(len(l) + len(r) + 1)
+
+	b.WriteString(l)
+	b.WriteByte(' ')
+	b.WriteString(r)
+
+	syncPool.Put(b)
+
+	return b.Bytes()
 }
