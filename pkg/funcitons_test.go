@@ -64,7 +64,7 @@ func BenchmarkBuider(b *testing.B) {
 	_ = s
 }
 
-// BenchmarkPool-12    	27338060	        43.80 ns/op	       0 B/op	       0 allocs/op
+// BenchmarkPool-12    	27218908	        44.45 ns/op	       0 B/op	       0 allocs/op
 func BenchmarkPool(b *testing.B) {
 	s := []byte{}
 

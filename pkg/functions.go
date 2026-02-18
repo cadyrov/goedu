@@ -40,6 +40,8 @@ func concatBuilder(l, r string) string {
 	return b.String()
 }
 
+var maxSize = 2 << 10
+
 var syncPool = &sync.Pool{
 	New: func() interface{} {
 		return bytes.NewBuffer(make([]byte, 0, 64))
@@ -55,7 +57,9 @@ func concatPool(l, r string) []byte {
 	b.WriteByte(' ')
 	b.WriteString(r)
 
-	syncPool.Put(b)
+	if b.Cap() < maxSize {
+		syncPool.Put(b)
+	}
 
 	return b.Bytes()
 }
