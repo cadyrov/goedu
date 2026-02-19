@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	x := "ПЖ"
@@ -13,6 +15,10 @@ func main() {
 
 	for i := 0; i < len(x); i++ {
 		fmt.Println(x[i])
+	}
+
+	for _, v := range []rune(x) {
+		fmt.Println(string(v))
 	}
 
 }
